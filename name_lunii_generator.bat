@@ -9,7 +9,7 @@ powershell -Command "$host.UI.RawUI.ForegroundColor = 'Blue'; Write-Host 'Entrez
 powershell -Command "$host.UI.RawUI.ForegroundColor = 'White'; Write-Host ' '"
 set /p titre=
 
-REM Formatage du titre si j'me suis pas gouré.
+REM Formatage du titre si j'me suis pas gouré
 set "titre=%titre:~0,1%%titre:~1,9999%"
 set "titre=%titre: =_%"
 
