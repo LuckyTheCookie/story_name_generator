@@ -9,10 +9,10 @@ def generate_pack_name():
     age = entry_age.get()
     titre = entry_titre.get().title().replace(" ", "_")
     auteur = entry_auteur.get()
-    uuid = entry_uuid.get()
+    bonus = entry_bonus.get()
     version = entry_version.get()
 
-    if not age or not titre or not auteur or not uuid or not version:
+    if not age or not titre or not auteur or not bonus or not version:
         clipboard_label.config(text="Veuillez remplir toutes les cases s'il vous plait!", fg="red")
     else:
         result = f"{age}+]{titre}_({bonus}_episodes)[by_{auteur}_{version}]"
