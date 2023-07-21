@@ -3,6 +3,10 @@
 **💡 Aperçu :**
 *Le Générateur de Noms de Pack Lunii est un outil pratique qui vous aide à créer facilement des noms de packs pour votre Lunii, la fabrique à histoires préférée des enfants ! Que vous soyez un parent créatif, un enseignant inspiré ou un écrivain en herbe, cet outil vous facilitera la tâche pour nommer vos packs d'histoires.*
 
+**🆕 Nouveau - Online !**
+*Plus besoin de télécharger de fichiers, le site est disponible sur **(Github)[https://github.com/LuckyTheCookie/lunii]***
+*Vous pouvez quand même téléhcarger le fichier si vous prévoyez de l'utiliser en mode hors-ligne, je vous préviendrai si une mise à jour est disponible*
+
 **🧠 Simple et Intuitif :**
 *Entrez simplement les détails de votre pack, tels que l'âge minimum de l'audience, le titre, l'auteur, le nombre d'histoires et la version !*
 
