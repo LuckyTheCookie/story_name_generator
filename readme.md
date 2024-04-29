@@ -19,4 +19,4 @@
 **🌐 Multiplateforme :**
 *Mon outil est compatible avec Windows, macOS et Linux !*
 
-**J'espère espérons que cet outil rendra la création des noms de packs encore plus facile !** 📚📖
+**J'espère que cet outil rendra la création des noms de packs encore plus facile !** 📚📖
