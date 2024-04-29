@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lunii Name Generator</title>
+    <!-- Ajout du lien Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            user-select: none; /* Empêche la sélection de texte sur tout le corps de la page */
+            background-color: #f0f5f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #94c9db;
+            padding: 10px;
+            text-align: right;
+            align-items: center;
+            justify-content: flex-end;
+            display: flex;
+        }
+
+        #profileImage {
+            margin-left: auto; /* Cette ligne aligne l'image à droite */
+        }
+
+        .container {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.5s;
+        }
+
+        .title {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #4488a7;
+        }
+
+        .label {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .input {
+            padding: 10px;
+            width: 100%;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            background-color: #64a6bf;
+            color: #fff;
+            padding: 15px 25px;
+            cursor: pointer;
+            border: none;
+            font-size: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .button:hover {
+            background-color: #5a92a9;
+        }
+
+        .clipboard-label {
+            padding: 15px;
+            font-size: 18px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            display: none;
+            border-radius: 5px;
+        }
+
+        .extension-label {
+            font-size: 15px;
+            margin-top: 20px;
+        }
+
+        .file-preview {
+            font-size: 18px;
+            color: #4488a7;
+            margin-top: 10px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-container {
+            display: block;
+        }
+
+        .settings-container {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 20px;
+            background-color: #f0f5f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .settings-container .close-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+
+        .settings-container h3 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .switch-label {
+            margin-left: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img id="profileImage" src="" alt="Photo de profil de l'utilisateur" width="70" height="70">
+        <button class="btn btn-primary me-2" id=authButton onclick="toggleAuth()">Se connecter</button>
+        <a href="index.html" class="btn btn-primary me-2">😋 Accueil</a>
+        <button class="btn btn-primary me-2" onclick="openAbout()">📌 Mon Github</button>
+        <a href="othertools.html" class="btn btn-primary me-2">🛠️ D'autres Outils Lunii</a>
+        <a href="tutolunii.html" class="btn btn-primary me-2">✅ Ajouter un pack</a>
+        <button class="btn btn-primary me-2" onclick="toggleSettings()">⚙️ Paramètres</button>
+    </div>
+
+    <div id="notificationContainer" class="position-fixed top-0 end-0 p-3">
+        <div id="notificationTemplate" class="alert alert-dismissible fade" role="alert">
+            <span id="notificationMessage"></span>
+            <button type="button" class="btn-close" aria-label="Close" onclick="hideNotification()"></button>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="title">Bienvenue au Générateur de nom de pack Lunii</div>
+        <div class="mb-3">
+            <label for="age" class="form-label label">😶 Entrez l'âge minimum de votre histoire :</label>
+            <input type="number" class="form-control input" id="age" oninput="updatePreview();" placeholder="8" min="1" max="9">
+        </div>
+        <div class="mb-3">
+            <label for="titre" class="form-label label">💬 Entrez le titre :</label>
+            <input type="text" class="form-control input" id="titre" oninput="updatePreview(); showBonusMessage('titre')" placeholder="Harry Potter 1">
+            <div id="titreBonusMessage" class="text-muted small"></div>
+        </div>
+        <div class="mb-3">
+            <label for="auteur" class="form-label label">✒️ Entrez le nom du créateur du pack :</label>
+            <div id="auteurBonusMessageDiscord" class="text-muted small">Cette case est pré-remplie car vous avez autorisé l'intégration avec Discord.</div>
+            <input type="text" class="form-control input" id="auteur" oninput="updatePreview(); showBonusMessage('auteur')" placeholder="Lucky_Kika" disabled>
+            <div id="auteurBonusMessage" class="text-muted small"></div>
+        </div>
+        <div class="mb-3">
+            <label for="bonus" class="form-label label">📖 Entrez le nombre d'histoires dans votre pack :</label>
+            <input type="text" class="form-control input" id="bonus" oninput="updatePreview(); updateBonusMessage()" placeholder="8 chapitres">
+            <div id="bonusMessage" class="text-muted small"></div> 
+        </div>
+        <div class="mb-3">
+            <label for="version" class="form-label label">✨ Entrez la version de votre pack :</label>
+            <input type="number" class="form-control input" id="version" oninput="updatePreview(); updateVersionMessage()" placeholder="1">
+            <div id="versionMessage" class="text-muted small"></div> 
+        </div>
+        <div class="form-check extension-label">
+            <input type="checkbox" class="form-check-input" id="addExtension" onclick="updatePreview()">
+            <label class="form-check-label" for="addExtension">📦 Ajouter l'extension .zip</label>
+        </div>
+        <button class="btn btn-primary button relative" onclick="generatePackName()" id="copyButton">💾 Copier le nom du pack</button>
+        <div class="clipboard-label alert" id="clipboardLabel" role="alert" style="display: none;"></div>
+        
+        <div class="file-preview mt-3" id="filePreview"></div>
+    </div>
+
+    <!-- Conteneur pour les paramètres -->
+    <div class="settings-container" id="settingsContainer">
+        <span class="close-button" onclick="toggleSettings()">&times;</span>
+        <h3>Paramètres</h3>
+        <div class="switch-container mb-3">
+            <input type="checkbox" class="form-check-input" id="updateSwitch" onclick="toggleUpdatePreference()" checked>
+            <label class="form-check-label switch-label" for="updateSwitch">Activer la recherche de mises à jour au démarrage de l'application</label>
+        </div>
+    </div>
+
+
+    <!-- Ajout du lien Bootstrap JS (Optionnel, pour les fonctionnalités avancées) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        
+        let isLoggedIn = false; // Variable pour suivre l'état de connexion réel
+
+        // Nouvelle variable pour garder une trace de l'état du conteneur des paramètres
+        let isSettingsOpen = false;
+
+        function showCheckmark() {
+        const checkmark = document.getElementById("checkmark");
+        const copyButton = document.getElementById("copyButton");
+
+        copyButton.textContent = "✅ Copié !";
+
+        setTimeout(() => {
+            copyButton.textContent = "💾 Copier le nom du pack";
+        }, 2500);
+    }
+
+
+        function updateAuthButton() {
+            const authButton = document.getElementById('authButton');
+            const profileImage = document.getElementById('profileImage');
+            const creatorPackInput = document.getElementById('auteur');
+            const creatorPackMessage = document.getElementById('auteurBonusMessageDiscord');
+
+            if (isLoggedIn) {
+                // L'utilisateur est connecté, modifier le texte du bouton
+                authButton.textContent = "Se déconnecter";
+                profileImage.style.display = "block";
+                creatorPackInput.disabled = true; // Désactive la saisie de l'utilisateur
+                creatorPackMessage.style.display = "block"; // Affiche le message pré-rempli
+                showBonusMessage('auteur') // On affiche le message bonus parce qu'on ne peut pas écrire dans l'input
+            } else {
+                authButton.textContent = "Se connecter";
+                profileImage.style.display = "none";
+                creatorPackInput.disabled = false; // Active la saisie de l'utilisateur
+                creatorPackMessage.style.display = "none"; // Masque le message pré-rempli
+            }
+        }
+
+        function toggleAuth() {
+            if (isLoggedIn) {
+            // L'utilisateur est actuellement connecté, donc on le déconnecte
+            isLoggedIn = false;
+            localStorage.removeItem("access_token"); // Supprime le jeton d'accès du local storage
+            isLoggedIn = false; // Met à jour la variable d'état de connexion réel
+            updateAuthButton(); // Met à jour le texte du bouton de connexion/déconnexion
+            } else {
+            // L'utilisateur n'est pas actuellement connecté, donc on le connecte
+            isLoggedIn = true;
+            window.location.href = "https://discord.com/oauth2/authorize?client_id=1132660837883052123&redirect_uri=https://luckythecookie.github.io/lunii&response_type=token&scope=identify";
+            }
+
+            updateAuthButton(); // Mettre à jour le texte du bouton après avoir changé l'état de connexion
+        }
+
+
+        function showBonusMessage(fieldName) {
+            const messages = {
+                auteur: "✨ Quel magnifique pseudo !",
+                titre: "😯 Formidable choix d'histoire ",
+                // Ajoutez ici d'autres champs de saisie avec des messages rigolos
+            };
+
+            const input = document.getElementById(fieldName);
+            const messageDiv = document.getElementById(fieldName + "BonusMessage");
+
+            if (input.value) {
+                messageDiv.textContent = messages[fieldName];
+            } else {
+                messageDiv.textContent = "";
+            }
+        }
+
+        function updateVersionMessage() {
+            const version = document.getElementById('version').value;
+            const versionMessage = document.getElementById('versionMessage');
+
+            if (version >= 5) {
+                versionMessage.textContent = "😮 Ca fait un peu beaucoup là non ?!";
+            } else {
+                versionMessage.textContent = "";
+            }
+        }
+
+        function updateBonusMessage() {
+            const bonusInput = document.getElementById('bonus').value;
+            const bonusMessage = document.getElementById('bonusMessage');
+
+            // On extrait le nombre d'histoires du pack vu que c'est un type=text
+            const bonus = parseInt(bonusInput.match(/\d+/), 10);
+
+            if (!isNaN(bonus) && bonus >= 10) {
+                bonusMessage.textContent = "😏 Nous, on aime quand y'a beaucoup d'histoires";
+            } else {
+                bonusMessage.textContent = "";
+            }
+        }
+
+
+        
+
+
+        /* Fonction pour activer ou désactiver la recherche de mises à jour */
+        function toggleUpdatePreference() {
+            const updateSwitch = document.getElementById("updateSwitch");
+            const updatePreference = updateSwitch.checked;
+            localStorage.setItem("updatePreference", updatePreference);
+            alert(`La recherche de mises à jour au démarrage de l'application est maintenant ${updatePreference ? "activée" : "désactivée"}.`);
+
+            if (updatePreference) {
+                checkGithubRelease();
+            }
+        }
+
+        /* Fonction pour initialiser les paramètres depuis le Web Storage */
+        function initSettings() {
+            const updatePreference = localStorage.getItem("updatePreference");
+            if (updatePreference !== null) {
+                const updateSwitch = document.getElementById("updateSwitch");
+                updateSwitch.checked = updatePreference === "true";
+            }
+        }
+
+        function toggleSettingsContainer() {
+            const settingsContainer = document.querySelector(".settings-container");
+            if (settingsContainer.style.display === "none") {
+                settingsContainer.style.display = "block";
+            } else {
+                settingsContainer.style.display = "none";
+            }
+        }
+
+        function showNotification(message, type) {
+            const notificationContainer = document.getElementById("notificationContainer");
+
+            // Créer un nouvel élément de notification
+            const newNotification = document.createElement("div");
+            newNotification.classList.add("alert", `alert-${type}`, "alert-dismissible", "fade", "show");
+            newNotification.setAttribute("role", "alert");
+
+            // Ajouter le contenu de la notification
+            newNotification.innerHTML = `
+                <span>${message}</span>
+                <button type="button" class="btn-close" aria-label="Close" onclick="hideNotification(this)"></button>
+            `;
+
+            // Ajouter la notification au conteneur
+            notificationContainer.appendChild(newNotification);
+
+            // Disparition de la notification après 3 secondes (3000 millisecondes)
+            setTimeout(() => {
+                hideNotification(newNotification);
+            }, 3000);
+        }
+
+        function hideNotification(notification) {
+            if (!notification) {
+                notification = document.querySelector("#notificationContainer .alert");
+            }
+
+            // Cacher la notification en retirant la classe "show"
+            notification.classList.remove("show");
+
+            // Supprimer la notification après l'animation de disparition
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }
+
+        function hideClipboardLabel() {
+            const clipboardLabel = document.getElementById('clipboardLabel');
+            clipboardLabel.style.display = "none";
+        }
+
+        function generatePackName() {
+            const age = document.getElementById('age').value;
+            const titre = document.getElementById('titre').value.replace(/ /g, "_");
+            const auteur = document.getElementById('auteur').value.replace(/ /g, "_");
+            const bonus = document.getElementById('bonus').value.replace(/ /g, "_");
+            const version = document.getElementById('version').value;
+            const addExtension = document.getElementById('addExtension').checked;
+
+            const clipboardLabel = document.getElementById('clipboardLabel');
+
+            if (!age || !titre || !auteur || !bonus || !version) {
+                // Afficher la notification d'erreur
+                showNotification("Veuillez remplir toutes les cases s'il vous plaît!", "danger");
+            } else {
+                const ageNumber = parseInt(age, 10);
+                if (ageNumber > 9) {
+                    // Afficher la notification d'erreur
+                    showNotification("L'âge minimum ne peut pas être supérieur à 9. Veuillez contacter un administrateur si nécessaire.", "danger");
+                } else {
+                    let result = `${age}+]${titre}_(${bonus})[by_${auteur}_V${version}]`;
+                    if (addExtension) {
+                        result += ".zip";
+                    }
+
+                    navigator.clipboard.writeText(result).then(() => {
+                        // Afficher la notification de succès
+                        showNotification("Le nom du pack a été copié dans votre presse-papier !", "success");
+                        showCheckmark();
+                    });
+                }
+            }
+        }
+        function openAbout() {
+            window.open("https://github.com/LuckyTheCookie/lunii_name_generator/releases", "_blank");
+        }
+
+        function checkGithubRelease() {
+            const currentVersion = "2.3.0 - Beta";
+            const repoUrl = "https://api.github.com/repos/LuckyTheCookie/lunii_name_generator/releases";
+            fetch(repoUrl)
+                .then(response => response.json())
+                .then(releasesInfo => {
+                    const latestVersion = releasesInfo[0].tag_name;
+                    if (latestVersion > currentVersion) {
+                        const userResponse = confirm(`Une nouvelle version (${latestVersion}) est disponible sur GitHub ! Voulez-vous la télécharger maintenant ?`);
+                        if (userResponse) {
+                            const downloadLink = releasesInfo[0].html_url;
+                            window.open(downloadLink, "_blank");
+                        }
+                    } else {
+                        console.log("Vous utilisez la dernière version de l'application.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la requête vers l'API GitHub:", error);
+                });
+        }
+
+        function updatePreview() {
+            const age = document.getElementById('age').value;
+            const titre = document.getElementById('titre').value.replace(/ /g, "_");
+            const auteur = document.getElementById('auteur').value.replace(/ /g, "_");
+            const bonus = document.getElementById('bonus').value.replace(/ /g, "_");
+            const version = document.getElementById('version').value;
+            const addExtension = document.getElementById('addExtension').checked;
+
+            let result = "";
+            if (age) {
+                result += `${age}+]`;
+            }
+            if (titre) {
+                result += `${titre}`;
+            }
+            if (bonus) {
+                result += `(${bonus})`;
+            }
+            if (auteur) {
+                result += `[by_${auteur}`;
+            }
+            if (version) {
+                result += `_V${version}]`;
+            }
+            if (addExtension) {
+                result += ".zip";
+            }
+
+            document.getElementById('filePreview').textContent = result;
+            document.getElementById('clipboardLabel').style.display = "none";
+        }
+
+
+        function toggleSettings() {
+            const settingsContainer = document.getElementById('settingsContainer');
+            isSettingsOpen = !isSettingsOpen;
+            settingsContainer.style.display = isSettingsOpen ? "block" : "none";
+        }
+
+        // Fonction pour extraire le jeton d'accès de l'URL
+        function getAccessTokenFromURL() {
+        const params = new URLSearchParams(window.location.hash.substring(1));
+        return params.get("access_token");
+    }
+
+    // Fonction pour récupérer les informations de profil de l'utilisateur à partir de l'API de Discord
+    async function getUserProfile(accessToken) {
+        const response = await fetch("https://discord.com/api/v9/users/@me", {
+            headers: {
+                "Authorization": `Bearer ${accessToken}`
+            }
+        });
+        return await response.json();
+    }
+
+    // Fonction pour afficher les informations de profil de l'utilisateur
+    function displayUserProfile(profile) {
+        const profileNameInput = document.getElementById("auteur");
+        const profileImage = document.getElementById("profileImage");
+
+        profileNameInput.value = profile.username;
+        profileImage.src = `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`;
+    }
+
+    function handleAuthorization() {
+        const accessToken = getAccessTokenFromURL();
+        if (accessToken) {
+            isLoggedIn = true; // Met à jour la variable d'état de connexion réel
+            updateAuthButton(); // Mettre à jour le texte du bouton de connexion/déconnexion
+            getUserProfile(accessToken)
+                .then(displayUserProfile)
+                .catch(error => console.error("Erreur lors de la récupération du profil :", error));
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+            initSettings(); // Initialiser les paramètres depuis le Web Storage
+            updateAuthButton(); // Mettre à jour le texte du bouton et afficher/masquer l'image
+            handleAuthorization(); // Gérer l'autorisation si l'utilisateur est déjà connecté
+            displayUserProfile();
+        });
+
+    </script>
+</body>
+
+</html>

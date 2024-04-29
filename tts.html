@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text-to-Speech avec Téléchargement</title>
+</head>
+<body>
+    <h1>Text-to-Speech avec Téléchargement</h1>
+    <textarea id="textToSpeak" placeholder="Entrez le texte à lire"></textarea>
+    <button onclick="speakText()">Lire</button>
+    <button onclick="downloadAudio()">Télécharger l'Audio</button>
+
+    <script>
+        let audioBlob = null;
+
+        async function speakText() {
+            const textToSpeak = document.getElementById('textToSpeak').value;
+            const ttsApiUrl = `https://api.tts.mozilla.org/text-to-speech/v1/tts?text=${encodeURIComponent(textToSpeak)}&lang=fr&format=wav`;
+
+            try {
+                const response = await fetch(ttsApiUrl, { method: 'POST' });
+                const audioData = await response.arrayBuffer();
+                audioBlob = new Blob([audioData], { type: 'audio/wav' });
+
+                // Jouer l'audio directement après avoir obtenu la réponse
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const audio = new Audio(audioUrl);
+                audio.play();
+            } catch (error) {
+                alert('Erreur lors de la conversion texte-voix. Veuillez réessayer.');
+                console.error('Erreur lors de la conversion texte-voix:', error);
+            }
+        }
+
+        function downloadAudio() {
+            if (audioBlob) {
+                const url = URL.createObjectURL(audioBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'speech_audio.wav';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            } else {
+                alert('Aucun audio disponible à télécharger. Veuillez d\'abord lire le texte.');
+            }
+        }
+    </script>
+</body>
+</html>
