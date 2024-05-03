@@ -1,0 +1,145 @@
+body {
+    user-select: none; /* Empêche la sélection de texte sur tout le corps de la page */
+    background-color: #DDF2FD;
+    color: #427D9D;
+    margin: 0;
+    padding: 0;
+}
+
+.title-first {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #164863;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.description-first {
+    font-size: 20px;
+    font-weight: bold;
+    color: #427D9D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.to-the-center {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+    text-decoration: underline;
+}
+
+.maintenance-banner {
+    background-color: #164863;
+    color: white;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 5);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    top: 0;
+    width: 100%;
+    font-weight: bold;
+    z-index: 9999; /* pour être sûr que le bandeau s'affiche au-dessus de tout le reste */
+}
+
+
+.newstext {
+    font-size: 13px;
+    font-weight: bold;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guide-container {
+    width: 80%;
+    margin: 0 auto; 
+    padding: 20px; 
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+    animation: slideIn 0.5s ease-in-out;
+}
+
+.step {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #164863;
+}
+
+.description {
+    font-size: 16px;
+    color: #427D9D;
+    margin-bottom: 10px;
+}
+
+.input {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.next-btn {
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.fadeOutAnimation {
+    animation: fadeOut 0.5s ease-in-out;
+}
+
+.fadeInAnimation {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

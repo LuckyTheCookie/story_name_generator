@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Name Generator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Styles personnalisés -->
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Guide pas à pas -->
+<div id="notificationContainer" class="position-fixed top-0 end-0 p-3">
+    <div id="notificationTemplate" class="alert alert-dismissible fade" role="alert">
+        <span id="notificationMessage"></span>
+        <button type="button" class="btn-close" aria-label="Close" onclick="hideNotification()"></button>
+    </div>
+</div>
+
+<div class="guide-container container mt-5">
+    <!-- Étape 1 -->
+    <div class="step step-1">
+        <div class="title-first">Story Name Generator</div>
+        <p class="text">Il semblerait que vous ne soyez jamais venu par ici... Laissez-moi vous expliquer le concept en bref :<br><strong>Story Name Generator permet de nommer d'un claquement de doigt vos packs d'histoires !</strong></p>
+        <button class="btn btn-primary next-btn" onclick="nextStep(1); updatePreview();">Commencer</button>
+    </div>
+    <!-- Étape 1 Connected -->
+    <div class="step step-1-connected hidden">
+        <div class="title">Bienvenue à nouveau sur Story Name Generator !</div>
+        <div class="description">Ca me fait plaisir de vous revoir :</div>
+        <div class="username"></div>
+        <div class="text-muted">Oui, je sais, cette page ne ressemble à rien. Elle sera modifié très prochainement :)</div>
+        <button class="btn btn-primary next-btn" onclick="specialStep(); updatePreview();">Suivant</button>
+        <button class="btn btn-danger next-btn" onclick="deleteUsername()">Supprimer mon nom</button>
+    </div>
+    <!-- Étape 1 -->
+    <div class="step step-2 hidden">
+        <div class="title">Étape 1 : Entrez le titre de votre histoire</div>
+        <div class="description">💬 Choisissez un titre accrocheur pour votre histoire.</div>
+        <input type="text" class="form-control input" id="titre" oninput="updatePreview(); showBonusMessage('titre')">
+        <div id="titreBonusMessage" class="text-muted small"></div>
+        <button class="btn btn-primary next-btn" onclick="nextStep(2)">Suivant</button>
+        <button class="btn btn-secondary next-btn" onclick="previousStep(2)">Retour</button>
+    </div>
+    <!-- Étape 2 -->
+    <div class="step step-3 hidden">
+        <div class="title">Étape 2 : Choisissez l'âge minimum de votre histoire</div>
+        <div class="description">😶 Entrez l'âge minimum des lecteurs pour votre histoire.</div>
+        <input type="number" class="form-control input" id="age" min="1" max="9" placeholder="Harry Potter 1" oninput="updatePreview();">
+        <button class="btn btn-primary next-btn" onclick="nextStep(3); showConfettiAuthor()">Suivant</button>
+        <button class="btn btn-secondary next-btn" onclick="previousSpecialStep(3)">Retour</button>
+    </div>
+    <!-- Étape 3 -->
+    <div class="step step-4 hidden">
+        <div class="title">Étape 3 : Entrez votre nom</div>
+        <div class="description">✒️ Entrez votre nom ou votre pseudo en tant que créateur du pack d'histoire.</div>
+        <input type="text" class="form-control input" id="auteur" oninput="updatePreview(); showBonusMessage('auteur')" placeholder="Lucky">
+        <!-- Case à cocher pour ne pas stocker le nom d'utilisateur -->
+        <input type="checkbox" id="dontStoreUsername">
+        <label for="dontStoreUsername" id="dontStoreUsernameLabel">Ne pas stocker mon nom sur cet ordinateur</label>
+        <p id="dataWarningText" class="text-muted">Ces données sont stockées localement, assurez vous de pas saisir d'informations sensibles !</p>
+        <div id="auteurBonusMessage" class="text-muted small"></div>
+        <p id="preFilledText" class="text-muted">Votre (formidable) nom a été pré-rempli automatiquement 😉 !</p>
+        <button class="btn btn-primary next-btn" onclick="nextStep(4)">Suivant</button>
+        <button class="btn btn-secondary next-btn" onclick="previousStep(4)">Retour</button>
+    </div>
+    <!-- Étape 4 -->
+    <div class="step step-5 hidden">
+        <div class="title">Étape 4 : Choisissez le nombre d'histoires dans votre pack</div>
+        <div class="description">📖 Indiquez combien d'histoires seront incluses dans votre pack.</div>
+        <input type="text" class="form-control input" id="bonus" oninput="updatePreview(); updateBonusMessage()" placeholder="8 chapitres">
+        <div id="bonusMessage" class="text-muted small"></div> 
+        <button class="btn btn-primary next-btn" onclick="nextStep(5)">Suivant</button>
+        <button class="btn btn-secondary next-btn" onclick="previousStep(5)">Retour</button>
+    </div>
+    <!-- Étape 5 -->
+    <div class="step step-6 hidden">
+        <div class="title">Étape 5 : Choisissez la version de votre pack</div>
+        <div class="description">✨ Indiquez la version de votre pack d'histoire.</div>
+        <input type="number" class="form-control input" id="version" min="1" oninput="updatePreview(); updateVersionMessage()" placeholder="1">
+        <div id="versionMessage" class="text-muted small"></div> 
+        <button class="btn btn-primary next-btn" onclick="nextStep(6)">Suivant</button>
+        <button class="btn btn-secondary next-btn" onclick="previousStep(6)">Retour</button>
+    </div>
+    <!-- Étape 6 -->
+    <div class="step step-7 hidden">
+        <div class="title">Félicitations !</div>
+        <div class="description">Votre pack d'histoire est prêt à être nommé. Cliquez sur le bouton pour générer le nom.</div>
+        <div class="to-the-center form-check extension-label">
+            <input type="checkbox" class="form-check-input" id="addExtension" onclick="updatePreview()">
+            <label class="form-check-label" for="addExtension">📦 Ajouter l'extension .zip</label>
+        </div>
+        <button id="generatePackNameButton" class="btn btn-primary next-btn" onclick="generatePackName()">💾 Générer le nom du pack</button>
+        <button class="btn btn-secondary next-btn" onclick="previousStep(7)">Retour</button>
+    </div>
+</div>
+
+<!-- Preview -->
+<div class="guide-container container mt-5">
+    <div class="title">Prévisualisation du nom de votre pack</div>
+    <div class="description">Voici le nom de votre pack d'histoire !</div>
+    <div class="file-preview mt-3" id="filePreview"></div>
+</div>
+
+<!-- SCRIPTS -->
+<!-- jQuery and Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
+<script src="./Scripts/init.js"></script>
+<script src="./Scripts/guide.js"></script>
+<script src="./Scripts/auth.js"></script>
+<script src="./Scripts/pack.js"></script>
+<script src="./Scripts/confettis.js"></script>
+<script src="./Scripts/notification.js"></script>
+<script src="./Scripts/preview.js"></script>
+<script src="./Scripts/bonusMessage.js"></script>
+
+</body>
+</html>
