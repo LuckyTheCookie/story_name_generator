@@ -7,14 +7,13 @@ generatePackNameButton.addEventListener('click', function() {
     party.confetti(generatePackNameButton, {
         count: party.variation.range(40, 60), // Exemple d'option
         shapes: ["square", "circle", "roundedRectangle"] // Exemple de formes
-        // Ajoutez ici d'autres options de configuration selon vos besoins
     });
 });
 
 function showConfettiAuthor() {
 var input = document.getElementById('auteur');
     party.confetti(input, {
-        count: party.variation.range(150, 80), // Exemple d'option
-        shapes: ["square", "circle", "roundedRectangle"] // Exemple de formes
+        count: party.variation.range(150, 80),
+        shapes: ["square", "circle", "roundedRectangle"]
     });
 }

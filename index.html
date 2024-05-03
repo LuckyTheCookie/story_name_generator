@@ -11,6 +11,10 @@
 </head>
 <body>
 
+<div class="maintenance-banner to-the-center">
+    <p>Site en version Bêta, des bugs peuvent survenir...</p>
+</div>
+
 <!-- Guide pas à pas -->
 <div id="notificationContainer" class="position-fixed top-0 end-0 p-3">
     <div id="notificationTemplate" class="alert alert-dismissible fade" role="alert">
@@ -42,7 +46,7 @@
         <input type="text" class="form-control input" id="titre" oninput="updatePreview(); showBonusMessage('titre')">
         <div id="titreBonusMessage" class="text-muted small"></div>
         <button class="btn btn-primary next-btn" onclick="nextStep(2)">Suivant</button>
-        <button class="btn btn-secondary next-btn" onclick="previousStep(2)">Retour</button>
+        <button class="btn btn-secondary next-btn" onclick="previousSpecialStep(2)">Retour</button>
     </div>
     <!-- Étape 2 -->
     <div class="step step-3 hidden">
@@ -50,7 +54,7 @@
         <div class="description">😶 Entrez l'âge minimum des lecteurs pour votre histoire.</div>
         <input type="number" class="form-control input" id="age" min="1" max="9" placeholder="Harry Potter 1" oninput="updatePreview();">
         <button class="btn btn-primary next-btn" onclick="nextStep(3); showConfettiAuthor()">Suivant</button>
-        <button class="btn btn-secondary next-btn" onclick="previousSpecialStep(3)">Retour</button>
+        <button class="btn btn-secondary next-btn" onclick="previousStep(3)">Retour</button>
     </div>
     <!-- Étape 3 -->
     <div class="step step-4 hidden">

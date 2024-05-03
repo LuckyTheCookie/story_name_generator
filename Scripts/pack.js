@@ -27,7 +27,7 @@ function generatePackName() {
         console.log("Le nom d'utilisateur n'a pas été enregistré et a été supprimé.");
     }
     
-    // Construire le nom du pack
+    // Générer le nom du pack
     let packName = `${age}+]${titre}_(${bonus})[by_${auteur}_V${version}]`;
     
     // Copier le nom du pack dans le presse-papiers

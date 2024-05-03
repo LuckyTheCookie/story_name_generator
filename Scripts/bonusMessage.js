@@ -2,7 +2,6 @@ function showBonusMessage(fieldName) {
     const messages = {
         auteur: "✨ Quel magnifique pseudo !",
         titre: "😯 Formidable choix d'histoire ",
-        // Ajoutez ici d'autres champs de saisie avec des messages rigolos
     };
 
     const input = document.getElementById(fieldName);
