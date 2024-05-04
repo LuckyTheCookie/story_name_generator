@@ -1,3 +1,5 @@
+
+
 body {
     user-select: none; /* Empêche la sélection de texte sur tout le corps de la page */
     background-color: #DDF2FD;
@@ -7,7 +9,6 @@ body {
 }
 
 .title-first {
-    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #164863;
@@ -17,7 +18,6 @@ body {
 }
 
 .description-first {
-    font-size: 20px;
     font-weight: bold;
     color: #427D9D;
     display: flex;
@@ -55,7 +55,6 @@ a {
 
 
 .newstext {
-    font-size: 13px;
     font-weight: bold;
     color: red;
     display: flex;
@@ -80,14 +79,12 @@ a {
 }
 
 .title {
-    font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #164863;
 }
 
 .description {
-    font-size: 16px;
     color: #427D9D;
     margin-bottom: 10px;
 }
@@ -95,7 +92,6 @@ a {
 .input {
     padding: 10px;
     width: 100%;
-    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -103,6 +99,7 @@ a {
 
 .next-btn {
     margin-top: 10px;
+    font-size: medium;
 }
 
 .hidden {
@@ -142,4 +139,9 @@ a {
     to {
         transform: translateY(0);
     }
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
 }
