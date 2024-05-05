@@ -4,10 +4,11 @@ function generatePackName() {
     const titre = document.getElementById('titre').value.replace(/ /g, "_");
     const auteur = document.getElementById('auteur').value.replace(/ /g, "_");
     const bonus = document.getElementById('bonus').value.replace(/ /g, "_");
-    const version = document.getElementById('version').value;
+    const version = document.getElementById('version').value.replace(/\D/g, "");
+    const producteur = document.getElementById('producteur').value;
     
     // Vérifier si tous les champs sont remplis
-    if (!age || !titre || !auteur || !bonus || !version) {
+    if (!age || !titre || !auteur || !bonus || !version || !producteur) {
         showNotification("Veuillez remplir toutes les cases s'il vous plaît!", "danger");
         return;
     }
@@ -26,9 +27,14 @@ function generatePackName() {
         localStorage.removeItem("username");
         console.log("Le nom d'utilisateur n'a pas été enregistré et a été supprimé.");
     }
-    
+
     // Générer le nom du pack
-    let packName = `${age}+]${titre}_(${bonus})[by_${auteur}_V${version}]`;
+    let packName = `${age}+]${titre}_(${bonus})[by_${auteur}_V${version}`;
+
+    // Si le producteur est différent de l'auteur, ajouter le producteur
+    if (producteur !== auteur) {
+        packName = `${age}+]${producteur}-${titre}(${bonus})[by_${auteur}_V${version}`;
+    }
     
     // Copier le nom du pack dans le presse-papiers
     navigator.clipboard.writeText(packName).then(() => {

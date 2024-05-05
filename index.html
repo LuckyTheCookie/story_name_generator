@@ -90,8 +90,17 @@
         <button class="btn btn-primary next-btn" onclick="nextStep(6)">Suivant</button>
         <button class="btn btn-secondary next-btn" onclick="previousStep(6)">Retour</button>
     </div>
-    <!-- Étape 6 -->
+    <!-- Étape 6 Producteur de l'histoire -->
     <div class="step step-7 hidden">
+        <h3 class="title">Étape 6 : Indiquez le producteur de votre histoire</h3>
+        <h5 class="description">🎬 Entrez le nom du producteur de l'histoire.</h5>
+        <input type="text" class="form-control input" id="producteur" oninput="updatePreview();" placeholder="Lucky, RTL, France Inter,...">
+        <p class="text-muted">Si vous avez créé l'histoire entièrement, entrez votre nom. Sinon, entrez le nom du producteur de l'histoire.</p>
+        <button class="btn btn-primary next-btn" onclick="nextStep(7)">Suivant</button>
+        <button class="btn btn-secondary next-btn" onclick="previousStep(7)">Retour</button>
+    </div>
+    <!-- Étape 7 -->
+    <div class="step step-8 hidden">
         <h3 class="title">Félicitations !</h3>
         <h5 class="description">Votre pack d'histoire est prêt à être nommé. Cliquez sur le bouton pour générer le nom.</h5>
         <div class="to-the-center form-check extension-label">
@@ -99,7 +108,7 @@
             <label class="form-check-label" for="addExtension">📦 Ajouter l'extension .zip</label>
         </div>
         <button id="generatePackNameButton" class="btn btn-primary next-btn" onclick="generatePackName()">💾 Générer le nom du pack</button>
-        <button class="btn btn-secondary next-btn" onclick="previousStep(7)">Retour</button>
+        <button class="btn btn-secondary next-btn" onclick="previousStep(8)">Retour</button>
     </div>
 </div>
 

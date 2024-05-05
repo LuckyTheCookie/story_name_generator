@@ -5,10 +5,14 @@ function updatePreview() {
     const bonus = document.getElementById('bonus').value.replace(/ /g, "_");
     const version = document.getElementById('version').value;
     const addExtension = document.getElementById('addExtension').checked;
+    const producteur = document.getElementById('producteur').value.replace(/ /g, "_");
 
     let result = "";
     if (age) {
         result += `${age}+]`;
+    }
+    if (producteur && producteur !== auteur) {
+        result += `${producteur}-`;
     }
     if (titre) {
         result += `${titre}`;
@@ -20,7 +24,7 @@ function updatePreview() {
         result += `[by_${auteur}`;
     }
     if (version) {
-        result += `_V${version}]`;
+        result += `_V${version}`;
     }
     if (addExtension) {
         result += ".zip";
