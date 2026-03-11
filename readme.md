@@ -1,15 +1,19 @@
 # Story Name Generator 📚
 
-Story Name Generator est un générateur de noms de packs d'histoires pour le serveur Discord "Raconte-moi une histoire".
+Story Name Generator is a tool built for the **"Raconte-moi une histoire"** Discord community, a server dedicated to sharing story packs. It was created to solve a simple but recurring problem: members struggled to name their story packs correctly and consistently.
 
-## Comment ça marche ? 🤔
+## Why this tool? 💡
 
-Suivez simplement le guide en ligne et il générera pour vous le nom parfait pour votre pack d'histoire !
+The community had a naming convention for story packs, but people kept getting it wrong. Instead of explaining the rules over and over, this tool guides users step by step and generates the correct name automatically.
 
-## Statut du projet 🚀
+## How does it work? 🤔
 
-Le projet est actuellement en cours de développement.
+Just follow the online guide and the tool will generate the perfect name for your story pack based on your inputs. No room for mistakes!
 
-## Licence 📜
+## Tech stack 🛠️
 
-Story Name Generator est sous licence GNU GPL v3.0. Pour plus d'informations, veuillez consulter le fichier [Licence](LICENSE).
+- **HTML / CSS / JavaScript** (no framework)
+
+## License 📜
+
+Story Name Generator is licensed under the GNU GPL v3.0. See the [LICENSE](LICENSE) file for more details.
